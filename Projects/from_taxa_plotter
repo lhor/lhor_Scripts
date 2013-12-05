@@ -1,0 +1,28 @@
+> dat = dat[order(dat$fraction, decreasing=TRUE), ]
+> if(nrow(dat)>top.n) dat = rbind(data.frame(dat[1:top.n, ]), data.frame(V1=paste('Other (',nrow(dat)-top.n,')',sep=''), V2=sum(dat[(top.n+1):nrow(dat), 2]), fraction=sum(dat[(top.n+1):nrow(dat),3])));
+> dat$ymax = cumsum(dat$fraction)
+> dat$ymin = c(0, head(dat$ymax, n=-1))
+> 
+> 
+> ggplot(dat, aes(fill=dat$V1, ymax=ymax, ymin=ymin, xmax=4, xmin=3)) +
++      geom_rect(colour="grey30") +
++      coord_polar(theta="y") +
++      xlim(c(0, 4)) +
++      theme_bw() +
++      theme(panel.grid=element_blank()) +
++      theme(axis.text=element_blank()) +
++      theme(axis.ticks=element_blank()) +
++      labs(title="Customized ring plot")
+> dat
+                    V1    V2   fraction      ymax      ymin
+1  Alphaproteobacteria  4128 0.15281531 0.1528153 0.0000000
+2      Thermoleophilia  2298 0.08507015 0.2378855 0.1528153
+3   Betaproteobacteria  1977 0.07318698 0.3110724 0.2378855
+4      Acidobacteria-6  1581 0.05852738 0.3695998 0.3110724
+5  Deltaproteobacteria  1540 0.05700959 0.4266094 0.3695998
+6       Actinobacteria  1517 0.05615815 0.4827676 0.4266094
+7     [Spartobacteria]   973 0.03601969 0.5187873 0.4827676
+8        Acidobacteria   926 0.03427979 0.5530670 0.5187873
+9  Gammaproteobacteria   902 0.03339133 0.5864584 0.5530670
+10    Sphingobacteriia   883 0.03268797 0.6191463 0.5864584
+11         Other (121) 10288 0.38085366 1.0000000 0.6191463
