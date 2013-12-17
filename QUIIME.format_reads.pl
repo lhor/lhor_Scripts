@@ -18,14 +18,15 @@ $count=1;
 while ($lines = <FILE>)
 	{
 	chomp $lines;
+	$lines =~ s/\r$//;
 	if($lines=~ m/^>(.*$)/) {
-	$id=$1;
+	   $id=$1;
+	   print ">${name}_$count $id sample=Havana\n";
+	   $count++;
 	}
 	else
 	{
-	$seq=$lines;
+	   print "$lines\n";
 	}
-	print ">${name}_$count $id sample=$name\n$seq\n";
-	$count++;
 }
 		
